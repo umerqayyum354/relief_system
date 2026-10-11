@@ -10,57 +10,57 @@ Need Score = Damage + Families Affected + Route + Flood Warning + Medical Need +
 
 The score ranges from 0 to 100.
 
-| Factor | Condition | Points |
-|---|---|---|
-| Damage level | Low | 10 |
-| | Medium | 20 |
-| | High | 30 |
-| Families affected | 0 | 0 |
-| | 1 - 10 | 10 |
-| | 11 - 50 | 15 |
-| | 51 - 100 | 20 |
-| | 101 - 150 | 25 |
-| | 151 - 200 | 30 |
-| | More than 200 | 35 |
-| Access route | Open | +5 |
-| | Damaged | -5 |
-| Flood warning | Yes | +10 |
-| | No | 0 |
-| Medical need | Yes | +15 |
-| | No | 0 |
-| Previous aid | Received | -5 |
-| | Not received | +5 |
+| Factor            | Condition     | Points |
+| ----------------- | ------------- | ------ |
+| Damage level      | Low           | 10     |
+|                   | Medium        | 20     |
+|                   | High          | 30     |
+| Families affected | 0             | 0      |
+|                   | 1 - 10        | 10     |
+|                   | 11 - 50       | 15     |
+|                   | 51 - 100      | 20     |
+|                   | 101 - 150     | 25     |
+|                   | 151 - 200     | 30     |
+|                   | More than 200 | 35     |
+| Access route      | Open          | +5     |
+|                   | Damaged       | -5     |
+| Flood warning     | Yes           | +10    |
+|                   | No            | 0      |
+| Medical need      | Yes           | +15    |
+|                   | No            | 0      |
+| Previous aid      | Received      | -5     |
+|                   | Not received  | +5     |
 
 ## Reason for Each Weight
 
-| Factor | Reason |
-|---|---|
-| Damage level | It is the most direct measure of how serious the situation is, so it has a large weight (up to 30). |
-| Families affected | More affected families need more supplies, so the points increase with the number of families (up to 35). |
-| Access route | A damaged route makes delivery harder, so it lowers the score slightly. It does not cancel the need, so the effect is small (+5 / -5). |
-| Flood warning | A warning means the situation may get worse soon, so it adds 10 points. |
-| Medical need | Medical need can mean risk to life, so it gets a high bonus (15 points). |
-| Previous aid | Areas that already received help are lower priority than areas that received none (-5 / +5). |
+| Factor            | Reason                                                                                                                                 |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Damage level      | It is the most direct measure of how serious the situation is, so it has a large weight (up to 30).                                    |
+| Families affected | More affected families need more supplies, so the points increase with the number of families (up to 35).                              |
+| Access route      | A damaged route makes delivery harder, so it lowers the score slightly. It does not cancel the need, so the effect is small (+5 / -5). |
+| Flood warning     | A warning means the situation may get worse soon, so it adds 10 points.                                                                |
+| Medical need      | Medical need can mean risk to life, so it gets a high bonus (15 points).                                                               |
+| Previous aid      | Areas that already received help are lower priority than areas that received none (-5 / +5).                                           |
 
 ## Actions and Resources
 
 These actions and resource amounts are fixed by the assignment.
 
-| Action | Trucks | Supply Packs |
-|---|---|---|
-| A. Full Relief | 2 | 50 |
-| B. Standard Relief | 1 | 30 |
-| C. Emergency Kit Only | 1 | 10 |
-| D. Defer / Monitor | 0 | 0 |
+| Action                | Trucks | Supply Packs |
+| --------------------- | ------ | ------------ |
+| A. Full Relief        | 2      | 50           |
+| B. Standard Relief    | 1      | 30           |
+| C. Emergency Kit Only | 1      | 10           |
+| D. Defer / Monitor    | 0      | 0            |
 
 ## Decision Rules
 
-| Need Score | Preferred Action |
-|---|---|
-| 65 or more | A. Full Relief |
-| 45 to 64 | B. Standard Relief |
-| 25 to 44 | C. Emergency Kit Only |
-| Less than 25 | D. Defer / Monitor |
+| Need Score   | Preferred Action      |
+| ------------ | --------------------- |
+| 65 or more   | A. Full Relief        |
+| 45 to 64     | B. Standard Relief    |
+| 25 to 44     | C. Emergency Kit Only |
+| Less than 25 | D. Defer / Monitor    |
 
 **Resource checks:** Before an action is chosen, the program checks that both trucks **and** supply packs are enough. Resources are only subtracted when relief is actually sent, so they can never become negative.
 
@@ -72,10 +72,10 @@ These actions and resource amounts are fixed by the assignment.
 
 **Deferred vs Not Served:**
 
-| Status | When it happens |
-|---|---|
-| Deferred / Monitored | The score is below 25, so waiting is the decision. |
-| Not Served | The score needs help, but no action can be afforded with the remaining resources. |
+| Status               | When it happens                                                                   |
+| -------------------- | --------------------------------------------------------------------------------- |
+| Deferred / Monitored | The score is below 25, so waiting is the decision.                                |
+| Not Served           | The score needs help, but no action can be afforded with the remaining resources. |
 
 Both use 0 trucks and 0 supply packs.
 
@@ -93,36 +93,41 @@ Flowchart 2 shows how the action is chosen and how resources are checked:
 
 Starting resources: **5 trucks, 120 supply packs**
 
-| Request | Damage | Families | Route | Flood Warning | Medical Need | Previous Aid | Score | Action | Trucks Used | Packs Used | Remaining Trucks | Remaining Packs |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | | | | | | | | | | | | |
-| 2 | | | | | | | | | | | | |
-| 3 | | | | | | | | | | | | |
-| 4 | | | | | | | | | | | | |
-| 5 | | | | | | | | | | | | |
+Each request below was run separately, starting from 5 trucks and 120 supply packs.
 
-**Summary:** Served: __ , Deferred: __ , Not Served: __
+| Request | Damage | Families | Route   | Flood Warning | Medical Need | Previous Aid | Score | Action                | Trucks Used | Packs Used | Remaining Trucks | Remaining Packs |
+| ------- | ------ | -------- | ------- | ------------- | ------------ | ------------ | ----- | --------------------- | ----------- | ---------- | ---------------- | --------------- |
+| 1       | High   | 150      | Damaged | Yes           | Yes          | No           | 80    | A. Full Relief        | 2           | 50         | 3                | 70              |
+| 2       | High   | 40       | Damaged | Yes           | Yes          | Yes          | 60    | B. Standard Relief    | 1           | 30         | 4                | 90              |
+| 3       | Low    | 200      | Open    | No            | No           | No           | 50    | B. Standard Relief    | 1           | 30         | 4                | 90              |
+| 4       | High   | 90       | Open    | Yes           | Yes          | No           | 85    | A. Full Relief        | 2           | 50         | 3                | 70              |
+| 5       | Medium | 60       | Open    | No            | No           | Yes          | 40    | C. Emergency Kit Only | 1           | 10         | 4                | 110             |
+
+**Summary:** Served: 5 , Deferred: 0 , Not Served: 0
 
 ## Test Set 2: Insufficient Resources
 
-Starting resources: **__ trucks, __ supply packs**
+Starting resources: **1 truck, 20 supply packs**
 
-| Request | Damage | Families | Route | Flood Warning | Medical Need | Previous Aid | Score | Action | Trucks Used | Packs Used | Remaining Trucks | Remaining Packs |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | | | | | | | | | | | | |
-| 2 | | | | | | | | | | | | |
-| 3 | | | | | | | | | | | | |
-| 4 | | | | | | | | | | | | |
-| 5 | | | | | | | | | | | | |
+For testing insufficient resources, we reduced the starting resources in the code to `totalTrucks = 1` and `totalSupplyPacks = 20`. Each request below was run separately, starting from these resources.
 
-**Summary:** Served: __ , Deferred: __ , Not Served: __
+| Request | Damage | Families | Route   | Flood Warning | Medical Need | Previous Aid | Score | Action                                                | Trucks Used | Packs Used | Remaining Trucks | Remaining Packs |
+| ------- | ------ | -------- | ------- | ------------- | ------------ | ------------ | ----- | ----------------------------------------------------- | ----------- | ---------- | ---------------- | --------------- |
+| 1       | High   | 150      | Damaged | Yes           | Yes          | No           | 80    | C. Emergency Kit Only (Full Relief not available)     | 1           | 10         | 0                | 10              |
+| 2       | High   | 40       | Damaged | Yes           | Yes          | Yes          | 60    | C. Emergency Kit Only (Standard Relief not available) | 1           | 10         | 0                | 10              |
+| 3       | Low    | 200      | Open    | No            | No           | No           | 50    | C. Emergency Kit Only (Standard Relief not available) | 1           | 10         | 0                | 10              |
+| 4       | High   | 90       | Open    | Yes           | Yes          | No           | 85    | C. Emergency Kit Only (Full Relief not available)     | 1           | 10         | 0                | 10              |
+| 5       | Medium | 60       | Open    | No            | No           | Yes          | 40    | C. Emergency Kit Only                                 | 1           | 10         | 0                | 10              |
+
+**Summary:** Served: 5 , Deferred: 0 , Not Served: 0
 
 ## Group Member Contributions
 
-| Member | Contribution |
-|---|---|
+| Member               | Contribution                                      |
+| -------------------- | ------------------------------------------------- |
 | Muhammad Umer Qayyum | Wrote the C++ code and compiled the Word document |
-| Ali Waris | Wrote the README (Markdown) and made the flowcharts |
+| Ali Waris            | Wrote the README (Markdown)                       |
+| Fahad Amir           | Made the flowcharts                               |
 
 ## GitHub Repository
 
