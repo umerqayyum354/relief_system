@@ -1,10 +1,12 @@
 #include<iostream>
 using namespace std;
 
+// Damage Score :
 const int DAMAGE_LOW_SCORE = 10;
 const int DAMAGE_MEDIUM_SCORE = 20;
 const int DAMAGE_HIGH_SCORE = 30;
 
+// Family Affected Score :
 const int FAMILY_AFFECTED_1_TO_10_SCORE = 10;
 const int FAMILY_AFFECTED_11_to_50_SCORE = 15;
 const int FAMILY_AFFECTED_51_TO_100_SCORE = 20;
@@ -12,23 +14,29 @@ const int FAMILY_AFFECTED_101_TO_150_SCORE = 25;
 const int FAMILY_AFFECTED_151_TO_200_SCORE = 30;
 const int FAMILY_AFFECTED_GREATER_THAN_200_SCORE = 35;
 
+//Routes Score
 const int ROUTES_OPENED_SCORE = 5;
 const int ROUTES_DAMAGED_SCORE = -5;
 
+//Flood Warning Score :
 const int FLOOD_WARNING_YES_SCORE = 10;
 const int FLOOD_WARNING_NO_SCORE = 0;
 
+//Medical Need Score :
 const int MEDICAL_NEED_YES_SCORE = 15;
 const int MEDICAL_NEED_NO_SCORE = 0;
 
+//Previous Score :
 const int PREVIOUS_HELP_AVAILED_SCORE = -5;
 const int PREVIOUS_HELP_NOT_AVAILED_SCORE = 5;
 
+// Counter
 int completedRequestsCount = 0;
 int defferedRequestsCount = 0;
 int notServedRequestsCount = 0;
 int totalRequestsCount = 0;
 
+//User Inputs
 int userDamageScore;
 int userFamilyAffectedScore;
 int userRoutesScore;
@@ -43,9 +51,11 @@ int floodWarning;
 int medicalNeed;
 int previousHelp;
 
+//Aid
 int score;
-int totalTrucks = 5;
-int totalSupplyPacks = 120;
+int totalTrucks = 1;
+int totalSupplyPacks = 20;
+
 
 int trucksUsed;
 int packsUsed;
@@ -56,17 +66,19 @@ int choice;
 int main() {
 
 	while (true) {
-
+		// Question :
 		cout << "Hello! To enter your emergency request , Please select the damage level (1,2,3) ";
 		cout << endl << "1. Low \n2. Medium\n3. High\n";
 		cin >> damage;
 
+		// This if block is used to deal with char / string error in input
 		if (cin.fail()) {
 			cin.clear();
 			cin.ignore(1000, '\n');
 			cout << "Invalid Input. Please enter numbers only.\n";
 			continue;
 		}
+
 
 		switch (damage) {
 
@@ -84,6 +96,7 @@ int main() {
 			continue;
 		}
 
+		//Question :
 		cout << "Okay . To process your request , Please tell how many families have been affected in your area.\n";
 		cin >> familyAffected;
 
@@ -124,6 +137,7 @@ int main() {
 		}
 
 
+		//Question :
 		cout << "Is the access route open? (1 = Open, 2 = Damaged)\n";
 		cin >> routes;
 
@@ -141,7 +155,7 @@ int main() {
 			userRoutesScore = ROUTES_DAMAGED_SCORE;
 		}
 
-
+		//Question:
 		cout << "Is there a flood warning? (1 = Yes, 0 = No)\n";
 		cin >> floodWarning;
 
@@ -159,7 +173,7 @@ int main() {
 			userFloodScore = FLOOD_WARNING_NO_SCORE;
 		}
 
-
+		//Question :
 		cout << "Is there any medical need? (1 = Yes, 0 = No)\n";
 		cin >> medicalNeed;
 
@@ -205,7 +219,7 @@ int main() {
 		cout << "\nNeed Score = " << score << endl;
 
 
-		// Score 65 or more : Full Relief (2 trucks, 50 packs)
+		//  Full Relief (2 trucks, 50 packs)
 		if (score >= 65) {
 
 			if (totalTrucks >= 2 && totalSupplyPacks >= 50) {
@@ -241,7 +255,7 @@ int main() {
 			}
 		}
 
-		// Score 45 to 64 : Standard Relief (1 truck, 30 packs)
+		//  Standard Relief (1 truck, 30 packs)
 		else if (score >= 45) {
 
 			if (totalTrucks >= 1 && totalSupplyPacks >= 30) {
@@ -268,7 +282,7 @@ int main() {
 			}
 		}
 
-		// Score 25 to 44 : Emergency Kit Only (1 truck, 10 packs)
+		//  Emergency Kit Only (1 truck, 10 packs)
 		else if (score >= 25) {
 
 			if (totalTrucks >= 1 && totalSupplyPacks >= 10) {
@@ -316,6 +330,7 @@ int main() {
 		}
 	}
 
+	// Final Output
 	cout << "\n------ FINAL SUMMARY ------\n";
 	cout << "Total Requests = " << totalRequestsCount << endl;
 	cout << "Successfully Served = " << completedRequestsCount << endl;
