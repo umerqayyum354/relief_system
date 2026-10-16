@@ -53,8 +53,8 @@ int previousHelp;
 
 //Aid
 int score;
-int totalTrucks = 1;
-int totalSupplyPacks = 20;
+int totalTrucks = 5;
+int totalSupplyPacks = 120;
 
 
 int trucksUsed;
